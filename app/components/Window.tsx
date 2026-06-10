@@ -67,7 +67,6 @@ export default function WindowComponent({
       animate={{
         opacity: 1,
         scale: 1,
-        y: 0,
         x: win.isMaximized ? 0 : win.position.x,
         y: win.isMaximized ? 0 : win.position.y,
         width: win.isMaximized ? "100vw" : win.size.width,
