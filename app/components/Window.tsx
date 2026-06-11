@@ -1,13 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import TrafficLights from "./TrafficLights";
 import { WindowState } from "../hooks/useWindowManager";
 
 interface WindowProps {
   window: WindowState;
   isDark: boolean;
+  isMobile: boolean;
   onClose: () => void;
   onMinimize: () => void;
   onMaximize: () => void;
@@ -19,6 +20,7 @@ interface WindowProps {
 export default function WindowComponent({
   window: win,
   isDark,
+  isMobile,
   onClose,
   onMinimize,
   onMaximize,
@@ -64,37 +66,57 @@ export default function WindowComponent({
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.85, y: 20 }}
-      animate={{
-        opacity: 1,
-        scale: 1,
-        x: win.isMaximized ? 0 : win.position.x,
-        y: win.isMaximized ? 0 : win.position.y,
-        width: win.isMaximized ? "100vw" : win.size.width,
-        height: win.isMaximized ? "calc(100vh - 32px - 80px)" : win.size.height,
-      }}
+      animate={
+        isMobile
+          ? { opacity: 1, scale: 1, x: 0, y: 0, width: "100vw", height: "calc(100vh - 32px)" }
+          : {
+              opacity: 1,
+              scale: 1,
+              x: win.isMaximized ? 0 : win.position.x,
+              y: win.isMaximized ? 0 : win.position.y,
+              width: win.isMaximized ? "100vw" : win.size.width,
+              height: win.isMaximized ? "calc(100vh - 32px - 80px)" : win.size.height,
+            }
+      }
       exit={{ opacity: 0, scale: 0.9, y: 10 }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
       style={{
-        position: "absolute",
-        left: win.isMaximized ? 0 : undefined,
-        top: win.isMaximized ? 32 : undefined,
+        position: isMobile ? "fixed" : "absolute",
+        top: isMobile ? 32 : win.isMaximized ? 32 : undefined,
+        left: isMobile ? 0 : win.isMaximized ? 0 : undefined,
         zIndex: win.zIndex,
       }}
-      className={`flex flex-col rounded-xl overflow-hidden shadow-2xl border backdrop-blur-xl ${isDark ? "bg-[#1e1e2e]/95 border-white/10" : "bg-white/95 border-white/60"} ${isDragging ? "cursor-grabbing" : "cursor-default"}`}
+      className={`flex flex-col rounded-xl overflow-hidden shadow-2xl border backdrop-blur-xl ${
+        isDark
+          ? "bg-[#1e1e2e]/95 border-white/10"
+          : "bg-white/95 border-white/60"
+      } ${isDragging ? "cursor-grabbing" : "cursor-default"}`}
       onMouseDown={onFocus}
     >
       <div
-        className={`window-header flex items-center gap-3 px-4 py-3 border-b select-none ${isDark ? "bg-gradient-to-b from-[#2a2a3c] to-[#252536] border-white/5" : "bg-gradient-to-b from-gray-50 to-gray-100/80 border-gray-200/50"}`}
+        className={`window-header flex items-center gap-3 px-4 py-3 border-b select-none ${
+          isDark
+            ? "bg-gradient-to-b from-[#2a2a3c] to-[#252536] border-white/5"
+            : "bg-gradient-to-b from-gray-50 to-gray-100/80 border-gray-200/50"
+        }`}
         onMouseDown={handleMouseDown}
       >
         <TrafficLights onClose={onClose} onMinimize={onMinimize} onMaximize={onMaximize} />
-        <span className={`flex-1 text-center text-sm font-medium pointer-events-none ${isDark ? "text-white/70" : "text-text-light"}`}>
+        <span
+          className={`flex-1 text-center text-sm font-medium pointer-events-none ${
+            isDark ? "text-white/70" : "text-text-light"
+          }`}
+        >
           {win.title}
         </span>
         <div className="w-14" />
       </div>
 
-      <div className={`flex-1 overflow-auto custom-scrollbar p-6 ${isDark ? "text-white" : "text-text"}`}>
+      <div
+        className={`flex-1 overflow-auto custom-scrollbar p-6 ${
+          isDark ? "text-white" : "text-text"
+        }`}
+      >
         {children}
       </div>
     </motion.div>

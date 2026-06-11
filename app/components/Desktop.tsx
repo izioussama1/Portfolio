@@ -135,13 +135,97 @@ function LoadingScreen({ onComplete }: { onComplete: () => void }) {
   );
 }
 
+// ─── MOBILE WELCOME HEADER ─────────────────────────────────────
+// z-5 so it stays below windows (z-20) and below the LinkedIn button (z-10)
+function MobileWelcomeHeader() {
+  const phrases = [
+    "Welcome to IZI Oussama's Portfolio",
+    "Building the web, one pixel at a time",
+    "Hire me — I turn ideas into code",
+    "React • Next.js • Node.js • TypeScript",
+    "Let's build something amazing together",
+    "Available for freelance & full-time roles",
+  ];
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % phrases.length);
+    }, 3500);
+    return () => clearInterval(interval);
+  }, [phrases.length]);
+
+  return (
+    <div className="absolute top-[20%] left-0 right-0 -translate-y-1/2 z-[5] pointer-events-none flex flex-col items-center justify-center px-4">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentIndex}
+          initial={{ opacity: 0, y: 12, filter: "blur(4px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          exit={{ opacity: 0, y: -12, filter: "blur(4px)" }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
+          className="text-center max-w-sm"
+        >
+          <h1 
+            className="text-3xl sm:text-4xl font-bold text-white tracking-tight leading-tight"
+            style={{ fontFamily: "'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" }}
+          >
+            {phrases[currentIndex]}
+          </h1>
+          <p 
+            className="mt-3 text-sm sm:text-base text-cyan-400/80 tracking-widest uppercase font-medium"
+            style={{ fontFamily: "'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif" }}
+          >
+            Tap an icon below to explore
+          </p>
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  );
+}
+
+// ─── LINKEDIN GET IN TOUCH BUTTON ──────────────────────────────
+function LinkedInButton({ hasWindows }: { hasWindows: boolean }) {
+  return (
+    <div className={`absolute bottom-28 left-0 right-0 z-10 flex items-center justify-center pointer-events-auto transition-opacity duration-500 ${hasWindows ? "opacity-0 pointer-events-none" : "opacity-100"}`}>
+      <motion.a
+        href="https://linkedin.com/in/oussama-izi"
+        target="_blank"
+        rel="noopener noreferrer"
+        whileTap={{ scale: 0.95 }}
+        whileHover={{ scale: 1.05 }}
+        className="flex items-center gap-2 px-6 py-3 rounded-full bg-[#0A66C2] text-white font-semibold text-sm shadow-lg shadow-[#0A66C2]/30 border border-white/10 backdrop-blur-sm"
+        style={{ fontFamily: "'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif" }}
+      >
+        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+        </svg>
+        Get in Touch
+      </motion.a>
+    </div>
+  );
+}
+
 export default function Desktop() {
   const [isLoading, setIsLoading] = useState(true);
   const [showDesktop, setShowDesktop] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const DESKTOP_DELAY = 2000;
-  
+
+  // Detect mobile viewport
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768); // md breakpoint
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   const { windows, openWindow, closeWindow, minimizeWindow, maximizeWindow, focusWindow, updatePosition, isOpen, isMinimized } = useWindowManager();
   const activeApp = windows.find((w) => !w.isMinimized)?.title || "Finder";
+  const hasOpenWindows = windows.length > 0;
 
   const handleLoadingComplete = useCallback(() => {
     setIsLoading(false);
@@ -151,7 +235,6 @@ export default function Desktop() {
   }, []);
 
   const splineBackground = useMemo(() => <SplineBackground />, []);
-
   const allItems = useMemo<DesktopItem[]>(() => desktopItems as DesktopItem[], []);
 
   return (
@@ -162,7 +245,7 @@ export default function Desktop() {
 
       {!isLoading && (
         <div className="relative w-full h-screen overflow-hidden bg-black">
-          
+
           {/* ═══════════════════════════════════════════════════════
               LAYER 0: Spline Background (lowest z-index)
               pointer-events-auto so mouse moves reach the canvas
@@ -172,7 +255,7 @@ export default function Desktop() {
           </div>
 
           {/* Center Text — pointer-events-none so mouse passes through to Spline */}
-          <div className="absolute bottom-32 left-0 right-0 z-10 flex flex-col items-center justify-center pointer-events-none px-4">
+          <div className="absolute bottom-32 left-0 right-0 z-10 flex flex-col items-center justify-center pointer-events-none px-4 hidden md:flex">
             <p className="text-xs text-white/30 tracking-[0.3em] uppercase mb-2">
               Welcome to my <span className="text-cyan-400/60">Portfolio</span>
             </p>
@@ -181,6 +264,12 @@ export default function Desktop() {
               user-focused web experiences.
             </h2>
           </div>
+
+          {/* MOBILE: Welcome Header (visible only on mobile) — centered vertically, z-5 */}
+          {isMobile && showDesktop && <MobileWelcomeHeader />}
+
+          {/* MOBILE: LinkedIn Get in Touch Button — above dock, hides when window open */}
+          {isMobile && showDesktop && <LinkedInButton hasWindows={hasOpenWindows} />}
 
           {/* ═══════════════════════════════════════════════════════
               LAYER 1: Folders, Windows, Dock, MenuBar
@@ -197,8 +286,8 @@ export default function Desktop() {
                 className="absolute inset-0 z-10 pointer-events-none"
               >
 
-                {/* Folder icons — re-enable pointer events */}
-                <div className="pointer-events-auto">
+                {/* Folder icons — HIDDEN on mobile, visible on md+ */}
+                <div className="hidden md:block pointer-events-auto">
                   {allItems.map((folder) => (
                     <MemoizedFolderIcon
                       key={folder.id}
@@ -222,7 +311,6 @@ export default function Desktop() {
                         else if (folder.id === "nextjs") window.open("https://nextjs.org", "_blank");
                         else if (folder.id === "html") window.open("https://developer.mozilla.org/en-US/docs/Web/HTML", "_blank");
                         else if (folder.id === "resume") window.open("/resume.pdf", "_blank");
-                        else if (folder.id === "terminal") openWindow(folder.id, folder.name);
                         else openWindow(folder.id, folder.name);
                       }}
                     />
@@ -230,24 +318,47 @@ export default function Desktop() {
                 </div>
 
                 {/* ═══════════════════════════════════════════════════════
-                    LAYER 2: Windows (highest z-index)
+                    LAYER 2: Windows (highest z-index = z-20)
                     pointer-events-auto so windows are fully interactive
+                    On mobile: fixed inset-0 for TRUE fullscreen
+                    On desktop: normal draggable positioned windows
                     ═══════════════════════════════════════════════════════ */}
                 <AnimatePresence>
                   {windows.map((win) => (
                     <div
                       key={win.id}
-                      className="absolute z-20 pointer-events-auto"
-                      style={{ left: win.position?.x || 100, top: win.position?.y || 100 }}
+                      className="pointer-events-auto"
+                      style={
+                        isMobile
+                          ? {
+                              position: "fixed",
+                              top: 0,
+                              left: 0,
+                              right: 0,
+                              bottom: 0,
+                              zIndex: 20,
+                              width: "100vw",
+                              height: "100vh",
+                            }
+                          : {
+                              position: "absolute",
+                              left: win.position?.x || 100,
+                              top: win.position?.y || 100,
+                              zIndex: 20,
+                            }
+                      }
                     >
                       <MemoizedWindow
                         window={win}
                         isDark={true}
+                        isMobile={isMobile}
                         onClose={() => closeWindow(win.id)}
                         onMinimize={() => minimizeWindow(win.id)}
                         onMaximize={() => maximizeWindow(win.id)}
                         onFocus={() => focusWindow(win.id)}
-                        onDrag={(pos) => updatePosition(win.id, pos)}
+                        onDrag={(pos) => {
+                          if (!isMobile) updatePosition(win.id, pos);
+                        }}
                       >
                         {getAppComponent(win.id, openWindow)}
                       </MemoizedWindow>
@@ -255,15 +366,18 @@ export default function Desktop() {
                   ))}
                 </AnimatePresence>
 
-                {/* MenuBar — re-enable pointer events */}
+                {/* MenuBar — ALWAYS visible on all devices */}
                 <div className="pointer-events-auto">
                   <MenuBar activeApp={activeApp} isDark={true} />
                 </div>
 
-                {/* Dock — re-enable pointer events */}
+                {/* Dock — ALWAYS visible (mobile + desktop) */}
                 <div className="pointer-events-auto">
                   <Dock
-                    onOpenApp={openWindow}
+                    onOpenApp={(id) => {
+                      const title = appTitles[id] || id;
+                      openWindow(id, title);
+                    }}
                     openApps={allItems.map((f) => f.id).filter((id) => isOpen(id))}
                     minimizedApps={allItems.map((f) => f.id).filter((id) => isMinimized(id))}
                     isDark={true}
