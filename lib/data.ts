@@ -108,12 +108,82 @@ export const dockApps = [
 ];
 
 export const projects = [
-  { id: 1, title: "Nexus Commerce", desc: "Full-stack e-commerce with Stripe, real-time inventory, and admin dashboard.", tags: ["Next.js", "Prisma", "Stripe"], year: "2024" },
-  { id: 2, title: "Aura Analytics", desc: "Real-time data visualization with WebSocket and drag-and-drop widgets.", tags: ["React", "D3.js", "Node.js"], year: "2024" },
-  { id: 3, title: "Flux Social", desc: "Social platform with real-time messaging and AI content recommendations.", tags: ["Next.js", "Socket.io", "Redis"], year: "2023" },
-  { id: 4, title: "Zenith AI", desc: "AI content generation suite with image synthesis and model fine-tuning.", tags: ["Python", "FastAPI", "React"], year: "2023" },
-  { id: 5, title: "Vertex 3D", desc: "Interactive 3D product configurator with AR preview.", tags: ["Three.js", "R3F", "WebGL"], year: "2023" },
-  { id: 6, title: "Prisma CMS", desc: "Headless CMS with visual editor and multi-tenant architecture.", tags: ["Next.js", "GraphQL", "Docker"], year: "2022" },
+{
+  id: 1,
+  title: "LaythCreate",
+  desc: "Modern marketing website built with PHP and MySQL, featuring custom branding, responsive design, and dynamic content management.",
+  tags: ["PHP", "MySQL", "JavaScript"],
+  image: "/projects/laythweb.png",
+  demo: "https://your-demo-link.com",
+  github: "https://github.com/you/repo",
+  year: "2025",
+},
+
+{
+  id: 2,
+  title: "Renewal Eco Cleaning",
+  desc: "Professional cleaning company website built with WordPress, utilizing the latest themes and plugins for performance, SEO, and easy content management.",
+  tags: ["WordPress", "Elementor", "SEO"],
+  image: "/projects/cleaning.jpeg",
+  demo: "https://your-demo-link.com",
+  github: "https://github.com/you/repo",
+  year: "2024",
+},
+
+{
+  id: 3,
+  title: "Rosa Raya",
+  desc: "Community-driven sisterhood platform developed with PHP, designed to connect, empower, and engage members through a modern digital experience.",
+  tags: ["PHP", "MySQL", "Community"],
+  image: "/projects/rosaweb.png",
+  demo: "https://your-demo-link.com",
+  github: "https://github.com/you/repo",
+  year: "2024",
+},
+
+{
+  id: 4,
+  title: "Ask Logistics",
+  desc: "Transportation and logistics company website built with PHP, providing streamlined service information, business inquiries, and company management tools.",
+  tags: ["PHP", "MySQL", "Logistics"],
+  image: "/projects/asklog.png",
+  demo: "https://your-demo-link.com",
+  github: "https://github.com/you/repo",
+  year: "2024",
+},
+
+{
+  id: 5,
+  title: "Gasterij Manjefiek",
+  desc: "Restaurant website built with WordPress, featuring menu presentation, business information, and a responsive design optimized for customer engagement.",
+  tags: ["WordPress", "Restaurant", "Responsive"],
+  image: "/projects/gasterij.png",
+  demo: "https://your-demo-link.com",
+  github: "https://github.com/you/repo",
+  year: "2024",
+},
+
+{
+  id: 6,
+  title: "SilverBacks",
+  desc: "Boxing gym website developed with WordPress, showcasing training programs, memberships, and fitness services through a modern and engaging design.",
+  tags: ["WordPress", "Fitness", "Gym"],
+  image: "/projects/gym.png",
+  demo: "https://your-demo-link.com",
+  github: "https://github.com/you/repo",
+  year: "2024",
+},
+
+{
+  id: 7,
+  title: "Portfolio Website",
+  desc: "Personal portfolio built with Next.js and Spline, featuring interactive 3D elements, smooth animations, and a modern user experience to showcase projects and skills.",
+  tags: ["Next.js", "Spline", "React"],
+  image: "/projects/portfolio.png",
+  demo: "https://your-demo-link.com",
+  github: "https://github.com/you/repo",
+  year: "2025",
+},
 ];
 
 export const skills = [
