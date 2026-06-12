@@ -113,7 +113,7 @@ export const projects = [
   title: "LaythCreate",
   desc: "Modern marketing website built with PHP and MySQL, featuring custom branding, responsive design, and dynamic content management.",
   tags: ["PHP", "MySQL", "JavaScript"],
-  image: "/projects/laythweb.png",
+  image: "./projects/laythweb.png",
   demo: "https://your-demo-link.com",
   github: "https://github.com/you/repo",
   year: "2025",
