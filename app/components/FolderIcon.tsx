@@ -172,7 +172,10 @@ export default function FolderIcon({
   const [pos, setPos] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    if (angle !== undefined && radius !== undefined) {
+   if (angle === -90) {
+  console.log("cent
+    erX:", window.innerWidth / 2);
+  console.log("nodeX:", newPos.x);
       const updatePosition = () => {
         const newPos = calculatePosition(angle, radius, window.innerWidth, window.innerHeight);
         setPos(newPos);
