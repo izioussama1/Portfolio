@@ -172,10 +172,7 @@ export default function FolderIcon({
   const [pos, setPos] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-   if (angle === -90) {
-  console.log("cent
-    erX:", window.innerWidth / 2);
-  console.log("nodeX:", newPos.x);
+    if (angle !== undefined && radius !== undefined) {
       const updatePosition = () => {
         const newPos = calculatePosition(angle, radius, window.innerWidth, window.innerHeight);
         setPos(newPos);
@@ -249,16 +246,20 @@ export default function FolderIcon({
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ delay: 0.1, type: "spring", stiffness: 200 }}
-      className="absolute z-10 flex flex-col items-center gap-2 cursor-pointer group select-none"
-      style={{ left: pos.x, top: pos.y, transform: "translate(-50%, -50%)" }}
+      className="absolute z-10 left-0 top-0 w-fit h-fit cursor-pointer group select-none"
+      style={{ left: pos.x, top: pos.y }}
       onClick={onOpen}
       whileHover={{ scale: 1.08, y: -4 }}
       whileTap={{ scale: 0.95 }}
     >
-      {renderIcon()}
-      <span className={`px-2.5 py-1 rounded-md text-sm font-medium backdrop-blur-sm transition-colors shadow-sm ${isDark ? "text-white/70 bg-white/5 group-hover:bg-cyan-400/20 group-hover:text-white" : "text-text-light bg-white/60 group-hover:bg-folder-blue/20 group-hover:text-text"}`}>
-        {name}
-      </span>
+      <div className="relative w-fit h-fit">
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+          {renderIcon()}
+        </div>
+        <span style={{top: 40 + 'px'}} className={`absolute left-1/2 top-full mt-2 -translate-x-1/2 px-2.5 py-1 rounded-md text-sm font-medium backdrop-blur-sm transition-colors shadow-sm ${isDark ? "text-white/70 bg-white/5 group-hover:bg-cyan-400/20 group-hover:text-white" : "text-text-light bg-white/60 group-hover:bg-folder-blue/20 group-hover:text-text"}`}>
+          {name}
+        </span>
+      </div>
     </motion.div>
   );
 }
