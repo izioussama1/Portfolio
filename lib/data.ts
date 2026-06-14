@@ -7,16 +7,16 @@ export const desktopItems = [
     radius: 1,
     size: "medium",
   },
-  {
-    id: "terminal",
-    name: "Terminal",
+    {
+    id: "react",
+    name: "React",
     icon: "app",
-    appType: "terminal",
+    appType: "react",
     angle: -162,
     radius: 1,
     size: "small",
   },
-  {
+    {
     id: "projects",
     name: "Projects",
     icon: "folder",
@@ -24,79 +24,83 @@ export const desktopItems = [
     radius: 1,
     size: "medium",
   },
-  {
-    id: "certificate",
-    name: "Certificate",
-    icon: "folder",
-    angle: -126,
-    radius: 1,
-    size: "medium",
-  },
-  {
-    id: "react",
-    name: "React",
-    icon: "app",
-    appType: "react",
-    angle: -108,
-    radius: 1,
-    size: "small",
-  },
-  {
+    {
     id: "nodejs",
     name: "Node.js",
     icon: "app",
     appType: "nodejs",
+    angle: -126,
+    radius: 1,
+    size: "small",
+  },
+    {
+    id: "about",
+    name: "About me",
+    icon: "folder",
+    angle: -108,
+    radius: 1,
+    size: "medium",
+  },
+  {
+    id: "terminal",
+    name: "Terminal",
+    icon: "app",
+    appType: "terminal",
     angle: -90,
     radius: 1,
     size: "small",
+  },
+
+  {
+    id: "certificate",
+    name: "Certificate",
+    icon: "folder",
+    angle: -72,
+    radius: 1,
+    size: "medium",
   },
   {
     id: "nextjs",
     name: "Next.js",
     icon: "app",
     appType: "nextjs",
-    angle: -72,
+    angle: -54,
     radius: 1,
     size: "small",
+  },
+    {
+    id: "resume",
+    name: "Resume.pdf",
+    icon: "pdf",
+    angle: -36,
+    radius: 1,
+    size: "medium",
   },
   {
     id: "html",
     name: "HTML5",
     icon: "app",
     appType: "html",
-    angle: -54,
+    angle: -18,
     radius: 1,
     size: "small",
   },
-  {
-    id: "about",
-    name: "About me",
-    icon: "folder",
-    angle: -36,
-    radius: 1,
-    size: "medium",
-  },
+
   {
     id: "skills",
     name: "Skills",
     icon: "folder",
-    angle: -18,
-    radius: 1,
-    size: "medium",
-  },
-  {
-    id: "resume",
-    name: "Resume.pdf",
-    icon: "pdf",
     angle: -0,
     radius: 1,
     size: "medium",
   },
+
 ];
 
 export const certificateImages = [
-  { src: "/certificate-1.jpg", name: "Certificate 1" },
-  { src: "/certificate-2.jpg", name: "Certificate 2" },
+  { src: "./certificate-1.jpg", name: "Certificate 1" },
+  { src: "./certificate-2.jpg", name: "Certificate 2" },
+  { src: "./EF SET Certificate conv 0.png", name: "EF SET Certificate" },
 ];
 
 export const dockApps = [

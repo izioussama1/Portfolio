@@ -48,6 +48,10 @@ export default function SplineBackground() {
         width: "100%",
         height: "100%",
         zIndex: 1,
+        backgroundImage: "url('/bg.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
       }}
     />
   );

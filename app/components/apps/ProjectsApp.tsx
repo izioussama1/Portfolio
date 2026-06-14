@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { ExternalLink, Code2, FolderOpen } from "lucide-react";
 import { projects } from "@/lib/data";
 
-export default function ProjectsApp({ isDark }: { isDark: boolean }) {
+export default function ProjectsApp({ isDark, isFullscreen }: { isDark: boolean; isFullscreen?: boolean }) {
   const accent = isDark ? "text-cyan-400" : "text-folder-blue";
   const text = isDark ? "text-white" : "text-text";
   const textLight = isDark ? "text-white/50" : "text-text-light";
@@ -18,7 +18,7 @@ export default function ProjectsApp({ isDark }: { isDark: boolean }) {
           <span>~/Projects</span>
         </div>
 
-        <div className="grid gap-3">
+        <div className={`grid gap-3 ${isFullscreen ? "md:grid-cols-2" : ""}`}>
           {projects.map((project, i) => (
             <motion.div
               key={project.id}

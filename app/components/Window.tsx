@@ -75,7 +75,7 @@ export default function WindowComponent({
               x: win.isMaximized ? 0 : win.position.x,
               y: win.isMaximized ? 0 : win.position.y,
               width: win.isMaximized ? "100vw" : win.size.width,
-              height: win.isMaximized ? "calc(100vh - 32px - 80px)" : win.size.height,
+              height: win.isMaximized ? "calc(100vh - 32px)" : win.size.height,
             }
       }
       exit={{ opacity: 0, scale: 0.9, y: 10 }}

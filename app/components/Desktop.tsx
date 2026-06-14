@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useMemo, memo } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { certificateImages, desktopItems } from "@/lib/data";
-import { useWindowManager } from "../hooks/useWindowManager";
+import { useWindowManager, type WindowState } from "../hooks/useWindowManager";
 import FolderIcon from "./FolderIcon";
 import Window from "./Window";
 import MenuBar from "./MenuBar";
@@ -74,10 +74,10 @@ function CertificateGallery() {
   );
 }
 
-function getAppComponent(id: string, openWindowFn: (id: string, title: string) => void) {
+function getAppComponent(id: string, openWindowFn: (id: string, title: string) => void, isFullscreen = false) {
   const components: Record<string, React.ReactNode> = {
     about: <AboutApp isDark={true} />,
-    projects: <ProjectsApp isDark={true} />,
+    projects: <ProjectsApp isDark={true} isFullscreen={isFullscreen} />,
     skills: <SkillsApp isDark={true} />,
     contact: <ContactApp isDark={true} />,
     terminal: <TerminalApp onOpenApp={(appId) => { openWindowFn(appId, appTitles[appId] || appId); }} />,
@@ -137,7 +137,7 @@ function LoadingScreen({ onComplete }: { onComplete: () => void }) {
 
 // ─── MOBILE WELCOME HEADER ─────────────────────────────────────
 // z-5 so it stays below windows (z-20) and below the LinkedIn button (z-10)
-function MobileWelcomeHeader() {
+function MobileWelcomeHeader({ onHireMe }: { onHireMe: () => void }) {
   const phrases = [
     "Welcome to IZI Oussama's Portfolio",
     "Building the web, one pixel at a time",
@@ -157,28 +157,56 @@ function MobileWelcomeHeader() {
   }, [phrases.length]);
 
   return (
-    <div className="absolute top-[20%] left-0 right-0 -translate-y-1/2 z-[5] pointer-events-none flex flex-col items-center justify-center px-4">
+    <div className="absolute top-[20%] left-0 right-0 -translate-y-1/2 z-[5] pointer-events-auto flex flex-col items-center justify-center px-4">
       <AnimatePresence mode="wait">
         <motion.div
           key={currentIndex}
-          initial={{ opacity: 0, y: 12, filter: "blur(4px)" }}
+          initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          exit={{ opacity: 0, y: -12, filter: "blur(4px)" }}
-          transition={{ duration: 0.5, ease: "easeInOut" }}
+          exit={{ opacity: 0, y: -24, filter: "blur(6px)" }}
+          transition={{ duration: 0.55, ease: "easeInOut" }}
           className="text-center max-w-sm"
         >
-          <h1 
+          <motion.h1
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.4 }}
             className="text-3xl sm:text-4xl font-bold text-white tracking-tight leading-tight"
             style={{ fontFamily: "'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" }}
           >
             {phrases[currentIndex]}
-          </h1>
-          <p 
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.4 }}
             className="mt-3 text-sm sm:text-base text-cyan-400/80 tracking-widest uppercase font-medium"
             style={{ fontFamily: "'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif" }}
           >
             Tap an icon below to explore
-          </p>
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.4 }}
+            className="mt-6 flex flex-col sm:flex-row items-center gap-3"
+          >
+            <button
+              type="button"
+              onClick={onHireMe}
+              className="inline-flex items-center justify-center rounded-full bg-white text-black px-5 py-3 text-sm font-semibold shadow-lg shadow-black/10 transition hover:-translate-y-0.5"
+            >
+              Hire Me
+            </button>
+            <a
+              href="https://linkedin.com/in/oussama-izi"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/5 text-white px-5 py-3 text-sm font-semibold transition hover:bg-white/15"
+            >
+              LinkedIn
+            </a>
+          </motion.div>
         </motion.div>
       </AnimatePresence>
     </div>
@@ -226,6 +254,19 @@ export default function Desktop() {
   const { windows, openWindow, closeWindow, minimizeWindow, maximizeWindow, focusWindow, updatePosition, isOpen, isMinimized } = useWindowManager();
   const activeApp = windows.find((w) => !w.isMinimized)?.title || "Finder";
   const hasOpenWindows = windows.length > 0;
+  const MENU_BAR_HEIGHT = 32;
+
+  const clampWindowPosition = useCallback((win: WindowState, position: { x: number; y: number }) => {
+    if (typeof window === "undefined") return position;
+
+    const maxX = Math.max(0, window.innerWidth - win.size.width);
+    const maxY = Math.max(MENU_BAR_HEIGHT, window.innerHeight - win.size.height);
+
+    return {
+      x: Math.min(Math.max(position.x, 0), maxX),
+      y: Math.min(Math.max(position.y, MENU_BAR_HEIGHT), maxY),
+    };
+  }, [MENU_BAR_HEIGHT]);
 
   const handleLoadingComplete = useCallback(() => {
     setIsLoading(false);
@@ -255,18 +296,42 @@ export default function Desktop() {
           </div>
 
           {/* Center Text — pointer-events-none so mouse passes through to Spline */}
-          <div className="absolute bottom-32 left-0 right-0 z-10 flex flex-col items-center justify-center pointer-events-none px-4 hidden md:flex">
-            <p className="text-xs text-white/30 tracking-[0.3em] uppercase mb-2">
-              Welcome to my <span className="text-cyan-400/60">Portfolio</span>
-            </p>
-            <h2 className="text-xl md:text-2xl text-white/80 font-light text-center max-w-md leading-relaxed">
-              I build modern, responsive, and<br />
-              user-focused web experiences.
-            </h2>
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 22 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
+            className="absolute bottom-32 left-0 right-0 z-10 flex flex-col items-center justify-center pointer-events-none px-4 hidden md:flex"
+          >
+            <div className="text-center max-w-md">
+              <p className="text-xs text-white/30 tracking-[0.3em] uppercase mb-2">
+                Welcome to my <span className="text-cyan-400/60">Portfolio</span>
+              </p>
+              <h2 className="text-xl md:text-2xl text-white/80 font-light leading-relaxed">
+                I build modern, responsive, and<br />
+                user-focused web experiences.
+              </h2>
+            </div>
+            <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3 pointer-events-auto">
+              <button
+                type="button"
+                onClick={() => openWindow("contact", "Contact")}
+                className="inline-flex items-center justify-center rounded-full bg-white px-5 py-3 text-sm font-semibold text-black shadow-lg shadow-black/10 transition-transform hover:-translate-y-0.5"
+              >
+                Hire Me
+              </button>
+              <a
+                href="https://linkedin.com/in/oussama-izi"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/15"
+              >
+                LinkedIn
+              </a>
+            </div>
+          </motion.div>
 
           {/* MOBILE: Welcome Header (visible only on mobile) — centered vertically, z-5 */}
-          {isMobile && showDesktop && <MobileWelcomeHeader />}
+          {isMobile && showDesktop && <MobileWelcomeHeader onHireMe={() => openWindow("contact", "Contact")} />}
 
           {/* MOBILE: LinkedIn Get in Touch Button — above dock, hides when window open */}
           {isMobile && showDesktop && <LinkedInButton hasWindows={hasOpenWindows} />}
@@ -342,8 +407,8 @@ export default function Desktop() {
                             }
                           : {
                               position: "absolute",
-                              left: win.position?.x || 100,
-                              top: win.position?.y || 100,
+                              top: 0,
+                              left: 0,
                               zIndex: 20,
                             }
                       }
@@ -357,10 +422,10 @@ export default function Desktop() {
                         onMaximize={() => maximizeWindow(win.id)}
                         onFocus={() => focusWindow(win.id)}
                         onDrag={(pos) => {
-                          if (!isMobile) updatePosition(win.id, pos);
+                          if (!isMobile) updatePosition(win.id, clampWindowPosition(win, pos));
                         }}
                       >
-                        {getAppComponent(win.id, openWindow)}
+                        {getAppComponent(win.id, openWindow, win.isMaximized)}
                       </MemoizedWindow>
                     </div>
                   ))}
