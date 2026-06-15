@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { FileText, Terminal } from "lucide-react";
+import { FileText, Terminal, User, Briefcase, Zap, Mail, GraduationCap } from "lucide-react";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
@@ -23,6 +23,30 @@ interface FolderIconProps {
   isDark: boolean;
   onOpen: () => void;
 }
+
+// Simple icon map for specific folder IDs
+const folderIconMap: Record<string, { icon: React.ReactNode; glowColor: string }> = {
+  about: { 
+    icon: <User size={40} strokeWidth={1.5} className="text-blue-400" />, 
+    glowColor: "rgba(96, 165, 250, 0.4)" 
+  },
+  projects: { 
+    icon: <Briefcase size={40} strokeWidth={1.5} className="text-purple-400" />, 
+    glowColor: "rgba(192, 132, 252, 0.4)" 
+  },
+  skills: { 
+    icon: <Zap size={40} strokeWidth={1.5} className="text-amber-400" />, 
+    glowColor: "rgba(251, 191, 36, 0.4)" 
+  },
+  contact: { 
+    icon: <Mail size={40} strokeWidth={1.5} className="text-emerald-400" />, 
+    glowColor: "rgba(52, 211, 153, 0.4)" 
+  },
+  certificate: { 
+    icon: <GraduationCap size={40} strokeWidth={1.5} className="text-pink-400" />, 
+    glowColor: "rgba(244, 114, 182, 0.4)" 
+  },
+};
 
 // Convert an angle to a responsive top-half elliptical orbit.
 function calculatePosition(angle: number, radius: number, screenWidth: number, screenHeight: number) {
@@ -151,6 +175,7 @@ const ImageThumbnail = ({ src, width, height, isDark, name }: { src: string; wid
 };
 
 export default function FolderIcon({ 
+  id,
   name, 
   position, 
   angle, 
@@ -221,7 +246,19 @@ export default function FolderIcon({
       }
     }
 
-    // Default folder
+    // Default folder — check if we have a special icon for this ID
+    if (folderIconMap[id]) {
+      const { icon, glowColor } = folderIconMap[id];
+      return (
+        <AppIconWrapper isDark={isDark} size={size}>
+          <div style={{ filter: `drop-shadow(0 0 8px ${glowColor})` }}>
+            {icon}
+          </div>
+        </AppIconWrapper>
+      );
+    }
+
+    // Fallback to original folder SVG
     return (
       <div className="relative w-20 h-16 drop-shadow-md transition-shadow group-hover:drop-shadow-xl">
         <svg viewBox="0 0 80 64" fill="none" className="w-full h-full">

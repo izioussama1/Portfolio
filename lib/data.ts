@@ -35,7 +35,7 @@ export const desktopItems = [
   },
     {
     id: "about",
-    name: "About me",
+    name: "About.Me",
     icon: "folder",
     angle: -108,
     radius: 1,
@@ -118,8 +118,7 @@ export const projects = [
   desc: "Modern marketing website built with PHP and MySQL, featuring custom branding, responsive design, and dynamic content management.",
   tags: ["PHP", "MySQL", "JavaScript"],
   image: "./projects/laythweb.png",
-  demo: "https://your-demo-link.com",
-  github: "https://github.com/you/repo",
+  demo: "https://LaythCreate.nl",
   year: "2025",
 },
 
@@ -129,9 +128,8 @@ export const projects = [
   desc: "Professional cleaning company website built with WordPress, utilizing the latest themes and plugins for performance, SEO, and easy content management.",
   tags: ["WordPress", "Elementor", "SEO"],
   image: "./projects/cleaning.jpeg",
-  demo: "https://your-demo-link.com",
-  github: "https://github.com/you/repo",
-  year: "2024",
+  demo: "https://renewal-eco.vercel.app/",
+  year: "2025",
 },
 
 {
@@ -140,8 +138,8 @@ export const projects = [
   desc: "Community-driven sisterhood platform developed with PHP, designed to connect, empower, and engage members through a modern digital experience.",
   tags: ["PHP", "MySQL", "Community"],
   image: "./projects/rosaweb.png",
-  demo: "https://your-demo-link.com",
-  github: "https://github.com/you/repo",
+  demo: "https://rosa-raya.vercel.app/",
+  github: "https://github.com/izioussama1/RosaRaya",
   year: "2024",
 },
 
@@ -151,8 +149,7 @@ export const projects = [
   desc: "Transportation and logistics company website built with PHP, providing streamlined service information, business inquiries, and company management tools.",
   tags: ["PHP", "MySQL", "Logistics"],
   image: "./projects/asklog.png",
-  demo: "https://your-demo-link.com",
-  github: "https://github.com/you/repo",
+  demo: "https://ask-logistics.vercel.app/",
   year: "2024",
 },
 
@@ -162,9 +159,8 @@ export const projects = [
   desc: "Restaurant website built with WordPress, featuring menu presentation, business information, and a responsive design optimized for customer engagement.",
   tags: ["WordPress", "Restaurant", "Responsive"],
   image: "./projects/gasterij.png",
-  demo: "https://your-demo-link.com",
-  github: "https://github.com/you/repo",
-  year: "2024",
+  demo: "https://www.gasterijmanjefiek.nl/",
+  year: "2025",
 },
 
 {
@@ -173,9 +169,8 @@ export const projects = [
   desc: "Boxing gym website developed with WordPress, showcasing training programs, memberships, and fitness services through a modern and engaging design.",
   tags: ["WordPress", "Fitness", "Gym"],
   image: "./projects/gym.png",
-  demo: "https://your-demo-link.com",
-  github: "https://github.com/you/repo",
-  year: "2024",
+  demo: "https://silverbacksgym.nl",
+  year: "2025",
 },
 
 {
@@ -184,9 +179,9 @@ export const projects = [
   desc: "Personal portfolio built with Next.js and Spline, featuring interactive 3D elements, smooth animations, and a modern user experience to showcase projects and skills.",
   tags: ["Next.js", "Spline", "React"],
   image: "./projects/portfolio.png",
-  demo: "https://your-demo-link.com",
-  github: "https://github.com/you/repo",
-  year: "2025",
+  demo: "https://izioussama1.github.io/Portfolio",
+  github: "https://github.com/izioussama1/Portfolio",
+  year: "2026",
 },
 ];
 
