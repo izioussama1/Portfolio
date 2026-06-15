@@ -16,7 +16,7 @@ import TerminalApp from "./apps/TerminalApp";
 import SplineBackground from "./SplineBackground";
 
 const appTitles: Record<string, string> = {
-  about: "About Me",
+  about: "About.Me",
   projects: "Projects",
   skills: "Skills",
   contact: "Contact",
