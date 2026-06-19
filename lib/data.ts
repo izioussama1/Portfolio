@@ -70,7 +70,7 @@ export const desktopItems = [
   },
     {
     id: "resume",
-    name: "Resume.pdf",
+    name: "Cv.pdf",
     icon: "pdf",
     angle: -36,
     radius: 1,
@@ -108,6 +108,7 @@ export const dockApps = [
   { id: "projects", name: "Projects", icon: "briefcase" },
   { id: "skills", name: "Skills", icon: "zap" },
   { id: "contact", name: "Contact", icon: "mail" },
+  { id: "certificate", name: "Certificate", icon: "certificate" },
   { id: "terminal", name: "Terminal", icon: "terminal" },
 ];
 
@@ -189,5 +190,5 @@ export const skills = [
   { category: "Frontend", items: ["React", "Next.js", "TypeScript", "Tailwind", "Spline", "Framer Motion"] },
   { category: "Backend", items: ["Node.js", "MongoDB", "MySql" ] },
   { category: "Design", items: ["Figma", "UI/UX", "Prototyping", "Design Systems", "Illustrator"] },
-  { category: "DevOps", items: ["Git","Vercel", "Linux" ] },
+  { category: "DevOps", items: ["Git","Vercel", "Bash"] },
 ];

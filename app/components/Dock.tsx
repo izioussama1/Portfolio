@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { User, Briefcase, Zap, Mail, Terminal } from "lucide-react";
+import { User, Briefcase, Zap, Mail, Terminal, GraduationCap } from "lucide-react";
 import { dockApps } from "@/lib/data";
 
 const iconMap: Record<string, React.ReactNode> = {
@@ -10,6 +10,7 @@ const iconMap: Record<string, React.ReactNode> = {
   zap: <Zap size={24} />,
   mail: <Mail size={24} />,
   terminal: <Terminal size={24} />,
+  certificate: <GraduationCap size={24} />,
 };
 
 interface DockProps {

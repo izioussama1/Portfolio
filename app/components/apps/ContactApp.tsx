@@ -11,6 +11,7 @@ export default function ContactApp({ isDark }: { isDark: boolean }) {
   const inputBg = isDark ? "bg-white/5 border-white/10 placeholder:text-white/30" : "bg-white/60 border-white/80 placeholder:text-text-light/50";
   const btnBg = isDark ? "bg-cyan-400 text-black hover:bg-cyan-300" : "bg-folder-blue text-white hover:bg-blue-500";
   const socialBg = isDark ? "bg-white/5 border-white/10 text-white/40 hover:text-cyan-400 hover:border-cyan-400/30" : "bg-white/60 border-white/80 text-text-light hover:text-folder-blue hover:border-folder-blue/30";
+  const mailtoLink = "mailto:izioussama18@gmail.com?subject=Portfolio%20Inquiry&body=Hi%20Oussama%2C%0A%0AI%20would%20like%20to%20talk%20about%20a%20project.%0A";
 
   return (
     <div className="space-y-6">
@@ -20,13 +21,18 @@ export default function ContactApp({ isDark }: { isDark: boolean }) {
       </div>
 
       <div className="space-y-4">
-        <div className={`flex items-center gap-4 p-4 rounded-xl border ${cardBg}`}>
+        <motion.a
+          whileHover={{ y: -2 }}
+          whileTap={{ scale: 0.99 }}
+          href={mailtoLink}
+          className={`flex items-center gap-4 p-4 rounded-xl border ${cardBg} transition-colors hover:border-cyan-400/30 hover:bg-white/10 cursor-pointer`}
+        >
           <Mail size={20} className={accent} />
           <div>
             <div className={`text-sm font-medium ${text}`}>Email</div>
-            <div className={`text-xs ${textLight}`}>hello@izioussama.com</div>
+            <div className={`text-xs ${textLight}`}>izioussama18@gmail.com</div>
           </div>
-        </div>
+        </motion.a>
         <div className={`flex items-center gap-4 p-4 rounded-xl border ${cardBg}`}>
           <MapPin size={20} className={accent} />
           <div>
@@ -40,10 +46,15 @@ export default function ContactApp({ isDark }: { isDark: boolean }) {
         <input type="text" placeholder="Your Name" className={`w-full px-4 py-2.5 rounded-lg text-sm focus:outline-none focus:border-cyan-400/50 transition-colors ${inputBg} ${text}`} />
         <input type="email" placeholder="Your Email" className={`w-full px-4 py-2.5 rounded-lg text-sm focus:outline-none focus:border-cyan-400/50 transition-colors ${inputBg} ${text}`} />
         <textarea placeholder="Your Message" rows={4} className={`w-full px-4 py-2.5 rounded-lg text-sm focus:outline-none focus:border-cyan-400/50 transition-colors resize-none ${inputBg} ${text}`} />
-        <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className={`w-full py-2.5 rounded-lg font-medium text-sm flex items-center justify-center gap-2 transition-colors shadow-md ${btnBg}`}>
+        <motion.a
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          href={mailtoLink}
+          className={`w-full inline-flex py-2.5 rounded-lg font-medium text-sm items-center justify-center gap-2 transition-colors shadow-md ${btnBg}`}
+        >
           <Send size={16} />
           Send Message
-        </motion.button>
+        </motion.a>
       </form>
 
       <div className="flex justify-center gap-4 pt-2">

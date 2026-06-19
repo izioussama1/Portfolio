@@ -268,6 +268,17 @@ export default function Desktop() {
     };
   }, [MENU_BAR_HEIGHT]);
 
+  const openAndDownloadFile = useCallback((url: string, filename?: string) => {
+    if (typeof window === "undefined" || typeof document === "undefined") return;
+    window.open(url, "_blank");
+    const link = document.createElement("a");
+    link.href = url;
+    if (filename) link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }, []);
+
   const handleLoadingComplete = useCallback(() => {
     setIsLoading(false);
     setTimeout(() => {
@@ -375,7 +386,7 @@ export default function Desktop() {
                         if (folder.id === "nodejs") window.open("https://nodejs.org", "_blank");
                         else if (folder.id === "nextjs") window.open("https://nextjs.org", "_blank");
                         else if (folder.id === "html") window.open("https://developer.mozilla.org/en-US/docs/Web/HTML", "_blank");
-                        else if (folder.id === "resume") window.open("/resume.pdf", "_blank");
+                        else if (folder.id === "resume") openAndDownloadFile("/resume.pdf", "resume.pdf");
                         else openWindow(folder.id, folder.name);
                       }}
                     />
@@ -440,6 +451,10 @@ export default function Desktop() {
                 <div className="pointer-events-auto">
                   <Dock
                     onOpenApp={(id) => {
+                      if (id === "resume") {
+                        openAndDownloadFile("/resume.pdf", "resume.pdf");
+                        return;
+                      }
                       const title = appTitles[id] || id;
                       openWindow(id, title);
                     }}
