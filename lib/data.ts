@@ -186,8 +186,8 @@ export const projects = [
 ];
 
 export const skills = [
-  { category: "Frontend", items: ["React", "Next.js", "TypeScript", "Tailwind", "Three.js", "Framer Motion"] },
-  { category: "Backend", items: ["Node.js", "PostgreSQL", "MongoDB", "Prisma", "GraphQL", "REST"] },
+  { category: "Frontend", items: ["React", "Next.js", "TypeScript", "Tailwind", "Spline", "Framer Motion"] },
+  { category: "Backend", items: ["Node.js", "MongoDB", "MySql" ] },
   { category: "Design", items: ["Figma", "UI/UX", "Prototyping", "Design Systems", "Illustrator"] },
-  { category: "DevOps", items: ["Git", "Docker", "AWS", "Vercel", "Linux", "CI/CD"] },
+  { category: "DevOps", items: ["Git","Vercel", "Linux" ] },
 ];
