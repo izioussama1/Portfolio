@@ -5,7 +5,7 @@ import { Code2, Palette, Globe, MapPin, Calendar, Sparkles } from "lucide-react"
 const stats = [
   { label: "Years Experience", value: "5+" },
   { label: "Projects", value: "6+" },
-  { label: "Clients", value: "30+" },
+  { label: "Clients", value: "13+" },
 ];
 
 export default function AboutApp({ isDark }: { isDark: boolean }) {
