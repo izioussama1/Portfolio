@@ -199,7 +199,7 @@ function MobileWelcomeHeader({ onHireMe }: { onHireMe: () => void }) {
               Hire Me
             </button>
             <a
-              href="https://linkedin.com/in/oussama-izi"
+              href="https://www.linkedin.com/in/oussama-izi-595868244/"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/5 text-white px-5 py-3 text-sm font-semibold transition hover:bg-white/15"
@@ -218,7 +218,7 @@ function LinkedInButton({ hasWindows }: { hasWindows: boolean }) {
   return (
     <div className={`absolute bottom-28 left-0 right-0 z-10 flex items-center justify-center pointer-events-auto transition-opacity duration-500 ${hasWindows ? "opacity-0 pointer-events-none" : "opacity-100"}`}>
       <motion.a
-        href="https://linkedin.com/in/oussama-izi"
+        href="https://www.linkedin.com/in/oussama-izi-595868244/"
         target="_blank"
         rel="noopener noreferrer"
         whileTap={{ scale: 0.95 }}
@@ -331,7 +331,7 @@ export default function Desktop() {
                 Hire Me
               </button>
               <a
-                href="https://linkedin.com/in/oussama-izi"
+                href="https://www.linkedin.com/in/oussama-izi-595868244/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/15"
