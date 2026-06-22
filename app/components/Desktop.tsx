@@ -48,9 +48,20 @@ type DesktopItem = {
 
 function ImageViewer({ src, name }: { src: string; name: string }) {
   return (
-    <div className="flex flex-col items-center justify-center h-full p-8 bg-[#0a0a0f]">
-      <div className="relative w-full max-w-2xl aspect-[4/3] rounded-xl overflow-hidden shadow-2xl border border-white/10">
-        <img src={src} alt={name} className="w-full h-full object-contain" loading="lazy" />
+    <div className="flex flex-col items-center justify-center h-full p-4 bg-[#0a0a0f]">
+      <div className="relative w-full max-w-5xl min-h-[66vh] rounded-xl overflow-hidden shadow-2xl border border-white/10 bg-black">
+        <object data={src} type="application/pdf" className="w-full h-full">
+          <div className="flex h-full flex-col items-center justify-center gap-3 p-6 text-center text-white/70">
+            <p>PDF preview isn’t supported in this browser.</p>
+            <a
+              href={src}
+              download={name}
+              className="rounded-md border border-white/20 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10"
+            >
+              Download {name}
+            </a>
+          </div>
+        </object>
       </div>
       <p className="mt-4 text-sm font-medium text-white/60">{name}</p>
     </div>
@@ -267,9 +278,8 @@ export default function Desktop() {
     };
   }, [MENU_BAR_HEIGHT]);
 
-  const openAndDownloadFile = useCallback((url: string, filename?: string) => {
+  const downloadFile = useCallback((url: string, filename?: string) => {
     if (typeof window === "undefined" || typeof document === "undefined") return;
-    window.open(url, "_blank");
     const link = document.createElement("a");
     link.href = url;
     if (filename) link.download = filename;
@@ -385,8 +395,10 @@ export default function Desktop() {
                         if (folder.id === "nodejs") window.open("https://nodejs.org", "_blank");
                         else if (folder.id === "nextjs") window.open("https://nextjs.org", "_blank");
                         else if (folder.id === "html") window.open("https://developer.mozilla.org/en-US/docs/Web/HTML", "_blank");
-                        else if (folder.id === "resume") openAndDownloadFile("/resume.pdf", "resume.pdf");
-                        else openWindow(folder.id, folder.name);
+                                            else if (folder.id === "resume") {
+                          downloadFile("/resume.pdf", "resume.pdf");
+                          openWindow(folder.id, folder.name);
+                        } else openWindow(folder.id, folder.name);
                       }}
                     />
                   ))}
@@ -451,7 +463,8 @@ export default function Desktop() {
                   <Dock
                     onOpenApp={(id) => {
                       if (id === "resume") {
-                        openAndDownloadFile("/resume.pdf", "resume.pdf");
+                        downloadFile("/resume.pdf", "resume.pdf");
+                        openWindow(id, appTitles[id] || id);
                         return;
                       }
                       const title = appTitles[id] || id;
