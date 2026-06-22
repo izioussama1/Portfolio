@@ -7,7 +7,7 @@ import emailjs from "@emailjs/browser";
 
 export default function ContactApp({ isDark }: { isDark: boolean }) {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
-  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error" | "missingConfig">("idle");
   const [copyStatus, setCopyStatus] = useState<"idle" | "copied">("idle");
 
   const emailjsServiceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ?? "";
@@ -34,7 +34,7 @@ export default function ContactApp({ isDark }: { isDark: boolean }) {
 
     if (!emailjsServiceId || !emailjsTemplateId || !emailjsPublicKey) {
       console.error("Missing EmailJS configuration.");
-      setStatus("error");
+      setStatus("missingConfig");
       return;
     }
 
@@ -141,6 +141,15 @@ export default function ContactApp({ isDark }: { isDark: boolean }) {
             className="text-center text-sm text-green-400"
           >
             Message sent successfully! I'll get back to you soon.
+          </motion.p>
+        )}
+        {status === "missingConfig" && (
+          <motion.p
+            initial={{ opacity: 0, y: 5 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center text-sm text-orange-300"
+          >
+            EmailJS config is missing in production. Set the public env vars in your deployment settings.
           </motion.p>
         )}
         {status === "error" && (
