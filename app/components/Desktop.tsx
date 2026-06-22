@@ -85,8 +85,7 @@ function getAppComponent(id: string, openWindowFn: (id: string, title: string) =
     nextjs: <TerminalApp onOpenApp={(appId) => openWindowFn(appId, appTitles[appId] || appId)} />,
     html: <TerminalApp onOpenApp={(appId) => openWindowFn(appId, appTitles[appId] || appId)} />,
     certificate: <CertificateGallery />,
-    project1: <ImageViewer src="/project-ecommerce.jpg" name="Ecommerce Project" />,
-    resume: <ImageViewer src="/resume.pdf" name="Resume.pdf" />,
+    resume: <ImageViewer src="./resume.pdf" name="Resume.pdf" />,
   };
   return components[id] || <AboutApp isDark={true} />;
 }
