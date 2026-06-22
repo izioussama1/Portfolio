@@ -96,7 +96,7 @@ function getAppComponent(id: string, openWindowFn: (id: string, title: string) =
     nextjs: <TerminalApp onOpenApp={(appId) => openWindowFn(appId, appTitles[appId] || appId)} />,
     html: <TerminalApp onOpenApp={(appId) => openWindowFn(appId, appTitles[appId] || appId)} />,
     certificate: <CertificateGallery />,
-    resume: <ImageViewer src="./resume.pdf" name="Resume.pdf" />,
+    resume: <ImageViewer src="/resume.pdf" name="Resume.pdf" />,
   };
   return components[id] || <AboutApp isDark={true} />;
 }
@@ -278,14 +278,30 @@ export default function Desktop() {
     };
   }, [MENU_BAR_HEIGHT]);
 
-  const downloadFile = useCallback((url: string, filename?: string) => {
+  const downloadFile = useCallback(async (url: string, filename?: string) => {
     if (typeof window === "undefined" || typeof document === "undefined") return;
-    const link = document.createElement("a");
-    link.href = url;
-    if (filename) link.download = filename;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+
+    try {
+      const response = await fetch(url, { cache: "no-store" });
+      if (!response.ok) throw new Error(`Failed to fetch ${url}: ${response.status}`);
+      const blob = await response.blob();
+      const objectUrl = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = objectUrl;
+      if (filename) link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
+    } catch (error) {
+      console.error("Resume download failed", error);
+      const link = document.createElement("a");
+      link.href = url;
+      if (filename) link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
   }, []);
 
   const handleLoadingComplete = useCallback(() => {
