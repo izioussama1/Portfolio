@@ -412,7 +412,7 @@ export default function Desktop() {
                         else if (folder.id === "nextjs") window.open("https://nextjs.org", "_blank");
                         else if (folder.id === "html") window.open("https://developer.mozilla.org/en-US/docs/Web/HTML", "_blank");
                                             else if (folder.id === "resume") {
-                          downloadFile("/resume.pdf", "resume.pdf");
+                          downloadFile("./resume.pdf", "resume.pdf");
                           openWindow(folder.id, folder.name);
                         } else openWindow(folder.id, folder.name);
                       }}
@@ -479,7 +479,7 @@ export default function Desktop() {
                   <Dock
                     onOpenApp={(id) => {
                       if (id === "resume") {
-                        downloadFile("/resume.pdf", "resume.pdf");
+                        downloadFile("./resume.pdf", "resume.pdf");
                         openWindow(id, appTitles[id] || id);
                         return;
                       }
